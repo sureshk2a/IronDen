@@ -12,12 +12,6 @@ A self-hosted, full-stack workout tracker built around the **Lean & Mean 7-Day D
 
 ## Screenshots
 
-### Dashboard — dark mode
-![Dashboard dark mode](docs/screenshots/dashboard-dark.png)
-
-### Dashboard — light mode
-![Dashboard light mode](docs/screenshots/dashboard-light.png)
-
 ### All-time stats with muscle activation map
 ![All-time stats](docs/screenshots/dashboard-alltime.png)
 
