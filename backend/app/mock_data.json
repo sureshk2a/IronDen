@@ -1,0 +1,113 @@
+{
+  "_comment": "Mock workout sessions. day_offset = days ago from today (0 = today, 1 = yesterday, …).",
+  "sessions": [
+    {
+      "day_offset": 0,
+      "workout_name": "Day 1 — Push: Chest / Shoulders / Triceps",
+      "focus": "Push",
+      "duration_seconds": 3240,
+      "total_calories": 387.5,
+      "total_sets": 18,
+      "muscles": ["chest", "shoulders", "triceps"]
+    },
+    {
+      "day_offset": 1,
+      "workout_name": "Day 2 — Pull: Back / Biceps",
+      "focus": "Pull",
+      "duration_seconds": 2760,
+      "total_calories": 342.0,
+      "total_sets": 16,
+      "muscles": ["back", "biceps"]
+    },
+    {
+      "day_offset": 3,
+      "workout_name": "Day 3 — Legs: Quads / Hamstrings / Glutes",
+      "focus": "Legs",
+      "duration_seconds": 3420,
+      "total_calories": 524.0,
+      "total_sets": 17,
+      "muscles": ["legs"]
+    },
+    {
+      "day_offset": 4,
+      "workout_name": "Day 4 — Core + Cardio",
+      "focus": "Core",
+      "duration_seconds": 2460,
+      "total_calories": 418.0,
+      "total_sets": 15,
+      "muscles": ["core", "legs"]
+    },
+    {
+      "day_offset": 5,
+      "workout_name": "Day 5 — Full Body Strength + HIIT",
+      "focus": "Full",
+      "duration_seconds": 3060,
+      "total_calories": 356.0,
+      "total_sets": 14,
+      "muscles": ["chest", "back", "legs", "shoulders"]
+    },
+    {
+      "day_offset": 8,
+      "workout_name": "Day 1 — Push: Chest / Shoulders / Triceps",
+      "focus": "Push",
+      "duration_seconds": 3180,
+      "total_calories": 375.0,
+      "total_sets": 17,
+      "muscles": ["chest", "shoulders", "triceps"]
+    },
+    {
+      "day_offset": 9,
+      "workout_name": "Day 2 — Pull: Back / Biceps",
+      "focus": "Pull",
+      "duration_seconds": 2820,
+      "total_calories": 328.0,
+      "total_sets": 15,
+      "muscles": ["back", "biceps"]
+    },
+    {
+      "day_offset": 11,
+      "workout_name": "Day 3 — Legs: Quads / Hamstrings / Glutes",
+      "focus": "Legs",
+      "duration_seconds": 3360,
+      "total_calories": 512.5,
+      "total_sets": 16,
+      "muscles": ["legs"]
+    },
+    {
+      "day_offset": 13,
+      "workout_name": "Day 4 — Core + Cardio",
+      "focus": "Core",
+      "duration_seconds": 2340,
+      "total_calories": 404.0,
+      "total_sets": 14,
+      "muscles": ["core", "legs"]
+    },
+    {
+      "day_offset": 15,
+      "workout_name": "Day 5 — Full Body Strength + HIIT",
+      "focus": "Full",
+      "duration_seconds": 2940,
+      "total_calories": 341.0,
+      "total_sets": 13,
+      "muscles": ["chest", "back", "legs", "shoulders"]
+    },
+    {
+      "day_offset": 16,
+      "workout_name": "Day 1 — Push: Chest / Shoulders / Triceps",
+      "focus": "Push",
+      "duration_seconds": 3120,
+      "total_calories": 362.0,
+      "total_sets": 17,
+      "muscles": ["chest", "shoulders", "triceps"]
+    },
+    {
+      "day_offset": 18,
+      "workout_name": "Day 2 — Pull: Back / Biceps",
+      "focus": "Pull",
+      "duration_seconds": 2700,
+      "total_calories": 318.0,
+      "total_sets": 15,
+      "muscles": ["back", "biceps"]
+    }
+  ]
+}

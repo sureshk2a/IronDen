@@ -1,0 +1,32 @@
+# Secrets — never commit
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+*.egg
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Docker volumes & overrides
+docker-compose.override.yml
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+*.swo
+
+# Test artefacts
+.coverage
+htmlcov/
+.pytest_cache/

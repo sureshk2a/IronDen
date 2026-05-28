@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lean & Mean — 5-Day Dumbbell Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#0a0a0a;--carbon:#111111;--iron:#1c1c1c;--steel:#2a2a2a;
+    --smoke:#3d3d3d;--ash:#888;--silver:#c0c0c0;--white:#f5f5f0;
+    --lime:#b8ff2e;--lime-dim:#8bc422;--orange:#ff9500;--red:#e05252;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;}
+  .hero{background:var(--carbon);border-bottom:1px solid var(--steel);padding:44px 28px 36px;position:relative;overflow:hidden;}
+  .hero::before{content:'LIFT';position:absolute;right:-16px;top:-24px;font-family:'Bebas Neue',sans-serif;font-size:200px;color:var(--iron);letter-spacing:-8px;line-height:1;pointer-events:none;user-select:none;}
+  .hero-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--lime);margin-bottom:10px;font-weight:500;}
+  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,10vw,76px);letter-spacing:2px;line-height:0.95;color:var(--white);margin-bottom:18px;position:relative;z-index:1;}
+  .hero h1 span{color:var(--lime);}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:1;}
+  .meta-chip{background:var(--steel);border:1px solid var(--smoke);padding:5px 12px;border-radius:2px;font-size:11px;letter-spacing:1px;font-weight:500;color:var(--silver);}
+  .meta-chip b{color:var(--lime);font-weight:700;}
+  .goals{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--steel);}
+  .goal-item{padding:18px 12px;border-right:1px solid var(--steel);text-align:center;}
+  .goal-item:last-child{border-right:none;}
+  .goal-icon{font-size:20px;margin-bottom:4px;}
+  .goal-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ash);}
+  .goal-value{font-size:12px;font-weight:500;color:var(--white);margin-top:2px;}
+  .tabs{display:flex;border-bottom:1px solid var(--steel);overflow-x:auto;scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{padding:11px 18px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ash);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s;font-weight:500;}
+  .tab.active{color:var(--lime);border-bottom-color:var(--lime);}
+  .tab:hover{color:var(--silver);}
+  .tab-content{display:none;}
+  .tab-content.active{display:block;}
+  .split-bar{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--steel);}
+  .split-day{padding:12px 4px;text-align:center;border-right:1px solid var(--steel);cursor:pointer;transition:background 0.2s;}
+  .split-day:last-child{border-right:none;}
+  .split-day:hover,.split-day.active{background:var(--iron);}
+  .split-day.active .day-num{color:var(--lime);}
+  .day-num{font-family:'Bebas Neue',sans-serif;font-size:24px;line-height:1;color:var(--silver);display:block;}
+  .day-name{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--ash);margin-top:1px;display:block;}
+  .day-focus{font-size:9px;color:var(--lime-dim);margin-top:3px;font-weight:500;}
+  .day-card{margin:14px;border:1px solid var(--steel);border-radius:4px;overflow:hidden;display:none;}
+  .day-card.visible{display:block;animation:fadeIn 0.22s ease;}
+  .day-card-header{background:var(--iron);padding:14px 18px;border-bottom:1px solid var(--steel);display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  .day-card-title{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1px;}
+  .day-card-sub{font-size:10.5px;color:var(--ash);margin-top:2px;}
+  .day-badge{background:var(--lime);color:var(--black);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:2px;white-space:nowrap;}
+  .wt-legend{display:flex;flex-wrap:wrap;gap:10px;padding:8px 14px;background:var(--carbon);border-bottom:1px solid var(--steel);font-size:10px;}
+  .wl-item{display:flex;align-items:center;gap:5px;}
+  .wl-dot{width:8px;height:8px;border-radius:50%;}
+  .wl-dot.start{background:var(--orange);}
+  .wl-dot.prog{background:var(--lime-dim);}
+  .wl-dot.cap{background:var(--red);}
+  .wl-label{color:var(--ash);}
+  .ex-table{width:100%;border-collapse:collapse;}
+  .ex-table th{background:var(--carbon);padding:7px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ash);text-align:left;font-weight:500;border-bottom:1px solid var(--steel);}
+  .ex-table td{padding:10px 10px;font-size:12px;border-bottom:1px solid var(--iron);vertical-align:top;}
+  .ex-table tr:last-child td{border-bottom:none;}
+  .ex-table tr:hover td{background:rgba(255,255,255,0.015);}
+  .ex-name{font-weight:500;color:var(--white);font-size:12.5px;}
+  .ex-target{font-size:10px;color:var(--ash);margin-top:1px;}
+  .ex-sets{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--lime);}
+  .ex-reps{color:var(--silver);font-size:11.5px;}
+  .ex-rest{color:var(--ash);font-size:11px;}
+  .wt-start{color:var(--orange);font-weight:700;font-size:13px;}
+  .wt-step{color:var(--lime-dim);font-size:11px;margin-top:3px;line-height:1.4;}
+  .wt-cap{color:var(--red);font-size:10.5px;margin-top:3px;}
+  .wt-note{color:var(--ash);font-size:10px;font-style:italic;margin-top:2px;}
+  .tip-box{font-size:10.5px;color:var(--ash);font-style:italic;line-height:1.4;}
+  .cardio-block{background:var(--iron);border-left:3px solid var(--lime);padding:12px 16px;}
+  .cardio-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--lime);font-weight:600;}
+  .cardio-desc{font-size:11.5px;color:var(--silver);margin-top:4px;line-height:1.5;}
+  .overload-wrap{margin:14px;border:1px solid var(--steel);border-radius:4px;overflow:hidden;}
+  .overload-scroll{overflow-x:auto;}
+  .overload-table{width:100%;border-collapse:collapse;min-width:580px;}
+  .overload-table th{background:var(--carbon);padding:8px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ash);text-align:left;border-bottom:1px solid var(--steel);white-space:nowrap;}
+  .overload-table td{padding:9px 10px;font-size:11.5px;border-bottom:1px solid var(--iron);color:var(--silver);}
+  .overload-table tr:last-child td{border-bottom:none;}
+  .ol-ex{font-weight:600;color:var(--white);white-space:nowrap;font-size:12px;}
+  .ol-start{color:var(--orange);font-weight:700;}
+  .ol-mid{color:var(--lime-dim);}
+  .ol-cap{color:var(--red);font-weight:700;}
+  .ol-note{color:var(--ash);font-size:10.5px;font-style:italic;}
+  .ol-group{background:var(--iron);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--lime-dim);padding:6px 10px;}
+  .principles{margin:14px;display:grid;gap:10px;}
+  .principle{background:var(--carbon);border:1px solid var(--steel);padding:14px 16px;border-radius:4px;display:flex;gap:12px;align-items:flex-start;}
+  .principle-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+  .principle-text h4{font-size:13px;font-weight:600;color:var(--white);}
+  .principle-text p{font-size:11.5px;color:var(--ash);margin-top:3px;line-height:1.5;}
+  .progress-block{margin:14px;background:linear-gradient(135deg,#0f1f00,#0a0a0a);border:1px solid var(--lime-dim);border-radius:4px;padding:18px;}
+  .progress-block h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;color:var(--lime);margin-bottom:12px;}
+  .progress-phase{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;}
+  .phase-num{background:var(--lime);color:var(--black);font-size:10px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .phase-text{font-size:11.5px;color:var(--silver);line-height:1.5;}
+  .phase-text b{color:var(--white);}
+  .section-header{padding:24px 20px 14px;border-bottom:1px solid var(--iron);display:flex;align-items:baseline;gap:12px;}
+  .section-num{font-family:'Bebas Neue',sans-serif;font-size:44px;line-height:1;color:var(--steel);}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:var(--white);}
+  .section-sub{font-size:10px;color:var(--ash);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+  footer{padding:20px;border-top:1px solid var(--steel);text-align:center;font-size:11px;color:var(--smoke);letter-spacing:1px;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">5-Day Intermediate Program · Dumbbells (max 24 kg each) + Bench + Treadmill</div>
+  <h1>LEAN &amp; <span>MEAN</span><br>PHYSIQUE PLAN</h1>
+  <div class="hero-meta">
+    <div class="meta-chip">Goal <b>Six Pack + Lean Muscle</b></div>
+    <div class="meta-chip">Bodyweight <b>80–90 kg</b></div>
+    <div class="meta-chip">Level <b>Intermediate</b></div>
+    <div class="meta-chip">Session <b>60–75 min</b></div>
+    <div class="meta-chip">DB Max <b>24 kg each</b></div>
+  </div>
+</div>
+
+<div class="goals">
+  <div class="goal-item"><div class="goal-icon">🔥</div><div class="goal-label">Primary</div><div class="goal-value">Fat Loss + Definition</div></div>
+  <div class="goal-item"><div class="goal-icon">💪</div><div class="goal-label">Secondary</div><div class="goal-value">Muscle Visibility</div></div>
+  <div class="goal-item"><div class="goal-icon">⚡</div><div class="goal-label">Tertiary</div><div class="goal-value">Strength Base</div></div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('schedule',this)">Weekly Schedule</div>
+  <div class="tab" onclick="switchTab('roadmap',this)">Weight Roadmap</div>
+  <div class="tab" onclick="switchTab('principles',this)">Key Principles</div>
+</div>
+
+<!-- ══ SCHEDULE TAB ══ -->
+<div class="tab-content active" id="tab-schedule">
+  <div class="split-bar">
+    <div class="split-day active" onclick="showDay(1,this)"><span class="day-num">01</span><span class="day-name">Monday</span><div class="day-focus">Push</div></div>
+    <div class="split-day" onclick="showDay(2,this)"><span class="day-num">02</span><span class="day-name">Tuesday</span><div class="day-focus">Pull</div></div>
+    <div class="split-day" onclick="showDay(3,this)"><span class="day-num">03</span><span class="day-name">Wednesday</span><div class="day-focus">Legs + Core</div></div>
+    <div class="split-day" onclick="showDay(4,this)"><span class="day-num">04</span><span class="day-name">Thursday</span><div class="day-focus">Upper Full</div></div>
+    <div class="split-day" onclick="showDay(5,this)"><span class="day-num">05</span><span class="day-name">Friday</span><div class="day-focus">HIIT + Core</div></div>
+  </div>
+
+  <!-- DAY 1 -->
+  <div class="day-card visible" id="day-1">
+    <div class="day-card-header">
+      <div><div class="day-card-title">Day 1 — Push: Chest / Shoulders / Triceps</div><div class="day-card-sub">Warm-up: 5 min treadmill walk + arm circles</div></div>
+      <div class="day-badge">Monday</div>
+    </div>
+    <div class="wt-legend">
+      <div class="wl-item"><div class="wl-dot start"></div><span class="wl-label">Start weight (Week 1–2)</span></div>
+      <div class="wl-item"><div class="wl-dot prog"></div><span class="wl-label">Add this much &amp; when</span></div>
+      <div class="wl-item"><div class="wl-dot cap"></div><span class="wl-label">24 kg cap — then use other methods</span></div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Weight &amp; Progression</th><th>Tip</th></tr>
+      <tr>
+        <td><div class="ex-name">DB Bench Press</div><div class="ex-target">Chest — primary compound</div></td>
+        <td><span class="ex-sets">4</span><span class="ex-reps"> × 8–10</span></td>
+        <td class="ex-rest">90 s</td>
+        <td><div class="wt-start">16–18 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks when you hit 10 reps all 4 sets</div><div class="wt-cap">⚠ Cap at 24 kg — then push reps</div></td>
+        <td class="tip-box">2-sec descent. Full chest stretch at bottom. Drive through palms.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Incline DB Press</div><div class="ex-target">Upper chest + front delt</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 10–12</span></td>
+        <td class="ex-rest">75 s</td>
+        <td><div class="wt-start">14 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 22–24 kg</div></td>
+        <td class="tip-box">Bench at 30–45°. Squeeze hard at top. Don't flare elbows wide.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Lateral Raise</div><div class="ex-target">Side delts — width &amp; V-taper</div></td>
+        <td><span class="ex-sets">4</span><span class="ex-reps"> × 12–15</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">6 kg each</div><div class="wt-step">➜ +2 kg every 3 weeks (form breaks fast here — go slow)</div></td>
+        <td class="tip-box">Lead with pinkies. Slight elbow bend. Zero momentum — no swinging.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Overhead Press</div><div class="ex-target">Shoulders — compound strength</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 8–10</span></td>
+        <td class="ex-rest">90 s</td>
+        <td><div class="wt-start">14–16 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 24 kg</div></td>
+        <td class="tip-box">Seated or standing. Core braced. Full lockout overhead.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Chest Fly</div><div class="ex-target">Chest isolation — stretch</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 12</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">10 kg each</div><div class="wt-step">➜ +2 kg every 2–3 weeks</div></td>
+        <td class="tip-box">Slight elbow bend. Chase the stretch — don't just throw the weight.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Overhead Tricep Extension</div><div class="ex-target">Triceps — long head</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 12–15</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">14 kg (one DB, both hands)</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 22–24 kg</div></td>
+        <td class="tip-box">Elbows stay close to head. Full ROM — feel the stretch at bottom.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Tricep Kickback</div><div class="ex-target">Triceps — definition finisher</div></td>
+        <td><span class="ex-sets">2</span><span class="ex-reps"> × 15</span></td>
+        <td class="ex-rest">45 s</td>
+        <td><div class="wt-start">8 kg each</div><div class="wt-step">➜ +2 kg every 2–3 weeks</div></td>
+        <td class="tip-box">Full extension. Squeeze hard at top for 1 second.</td>
+      </tr>
+    </table>
+    <div class="cardio-block">
+      <div class="cardio-label">🏃 Cardio Finisher</div>
+      <div class="cardio-desc">10 min treadmill — Zone 2 (comfortable pace, can hold a conversation). Burns extra calories without killing recovery for Tuesday's pull session.</div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card" id="day-2">
+    <div class="day-card-header">
+      <div><div class="day-card-title">Day 2 — Pull: Back / Biceps</div><div class="day-card-sub">Warm-up: 5 min treadmill + shoulder dislocates</div></div>
+      <div class="day-badge">Tuesday</div>
+    </div>
+    <div class="wt-legend">
+      <div class="wl-item"><div class="wl-dot start"></div><span class="wl-label">Start weight (Week 1–2)</span></div>
+      <div class="wl-item"><div class="wl-dot prog"></div><span class="wl-label">Add this much &amp; when</span></div>
+      <div class="wl-item"><div class="wl-dot cap"></div><span class="wl-label">24 kg cap — then use other methods</span></div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Weight &amp; Progression</th><th>Tip</th></tr>
+      <tr>
+        <td><div class="ex-name">DB Bent-Over Row</div><div class="ex-target">Mid back — thickness &amp; strength</div></td>
+        <td><span class="ex-sets">4</span><span class="ex-reps"> × 8–10</span></td>
+        <td class="ex-rest">90 s</td>
+        <td><div class="wt-start">18–20 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 24 kg — add drop sets</div></td>
+        <td class="tip-box">Hinge at hips, flat back. Pull elbows behind torso. Squeeze blades.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Single-Arm DB Row</div><div class="ex-target">Lats — unilateral pulling</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 10 each</span></td>
+        <td class="ex-rest">75 s</td>
+        <td><div class="wt-start">16–18 kg</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 24 kg</div></td>
+        <td class="tip-box">Knee on bench. Drive elbow to ceiling. Full stretch at bottom.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Reverse Fly</div><div class="ex-target">Rear delts + upper back</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 12–15</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">8 kg each</div><div class="wt-step">➜ +2 kg every 2–3 weeks</div></td>
+        <td class="tip-box">Chest on incline bench. Squeeze shoulder blades together at top.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Shrug</div><div class="ex-target">Traps</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 15</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">20 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 24 kg — hold longer at top</div></td>
+        <td class="tip-box">Hold at top 1 second. Straight up and down — don't roll.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Bicep Curl</div><div class="ex-target">Biceps — mass builder</div></td>
+        <td><span class="ex-sets">4</span><span class="ex-reps"> × 10–12</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">12–14 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: ~20–22 kg</div></td>
+        <td class="tip-box">Supinate (rotate) as you curl. No swinging. Full extension at bottom.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Hammer Curl</div><div class="ex-target">Brachialis + forearms</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 12</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">12 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks</div></td>
+        <td class="tip-box">Neutral grip throughout. Alternate arms. Control the descent.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Incline DB Curl</div><div class="ex-target">Biceps peak — long head stretch</div></td>
+        <td><span class="ex-sets">2</span><span class="ex-reps"> × 12</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">10 kg each</div><div class="wt-step">➜ +2 kg every 3 weeks</div><div class="wt-note">Harder than flat curl due to angle — go lighter</div></td>
+        <td class="tip-box">Bench at 45°. Arms hang fully. Maximizes long-head stretch.</td>
+      </tr>
+    </table>
+    <div class="cardio-block">
+      <div class="cardio-label">🏃 Cardio Finisher</div>
+      <div class="cardio-desc">10 min treadmill — steady Zone 2. Light enough that your arms aren't too taxed for Wednesday legs.</div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-card" id="day-3">
+    <div class="day-card-header">
+      <div><div class="day-card-title">Day 3 — Legs + Core</div><div class="day-card-sub">Warm-up: 5 min incline treadmill walk + leg swings</div></div>
+      <div class="day-badge">Wednesday</div>
+    </div>
+    <div class="wt-legend">
+      <div class="wl-item"><div class="wl-dot start"></div><span class="wl-label">Start weight (Week 1–2)</span></div>
+      <div class="wl-item"><div class="wl-dot prog"></div><span class="wl-label">Add this much &amp; when</span></div>
+      <div class="wl-item"><div class="wl-dot cap"></div><span class="wl-label">24 kg cap — then use other methods</span></div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Weight &amp; Progression</th><th>Tip</th></tr>
+      <tr>
+        <td><div class="ex-name">DB Goblet Squat</div><div class="ex-target">Quads, glutes — primary</div></td>
+        <td><span class="ex-sets">4</span><span class="ex-reps"> × 10–12</span></td>
+        <td class="ex-rest">90 s</td>
+        <td><div class="wt-start">20 kg (one DB vertical)</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 24 kg — add 3-sec pause at bottom</div></td>
+        <td class="tip-box">Chest up, depth below parallel. Elbows stay inside knees.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Romanian Deadlift</div><div class="ex-target">Hamstrings, glutes</div></td>
+        <td><span class="ex-sets">4</span><span class="ex-reps"> × 10</span></td>
+        <td class="ex-rest">90 s</td>
+        <td><div class="wt-start">18–20 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 24 kg — then slow 4-sec eccentric</div></td>
+        <td class="tip-box">Push hips back until deep hamstring stretch. Back stays flat.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Reverse Lunge</div><div class="ex-target">Quads, glutes — unilateral</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 10 each leg</span></td>
+        <td class="ex-rest">75 s</td>
+        <td><div class="wt-start">12 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 22–24 kg each</div></td>
+        <td class="tip-box">Rear knee hovers just off floor. Drive through front heel to stand.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Lateral Lunge</div><div class="ex-target">Inner thighs, glutes</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 10 each</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">10–12 kg (one DB at chest)</div><div class="wt-step">➜ +2 kg every 2–3 weeks</div></td>
+        <td class="tip-box">Planted foot stays flat. Sit deep into the lunge side.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Calf Raise</div><div class="ex-target">Calves</div></td>
+        <td><span class="ex-sets">4</span><span class="ex-reps"> × 20</span></td>
+        <td class="ex-rest">45 s</td>
+        <td><div class="wt-start">20 kg each (held at sides)</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 24 kg — then add reps to 25–30</div></td>
+        <td class="tip-box">Full ROM — pause at bottom stretch. Squeeze hard at top.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Plank</div><div class="ex-target">Core — stability</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 45–60 sec</span></td>
+        <td class="ex-rest">45 s</td>
+        <td><div class="wt-start">Bodyweight</div><div class="wt-step">➜ +10 sec every 2 weeks → add weight plate on back at 90 sec</div></td>
+        <td class="tip-box">Squeeze glutes and abs hard. Don't hold your breath. No hip sag.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Floor Leg Raise</div><div class="ex-target">Lower abs</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 15</span></td>
+        <td class="ex-rest">45 s</td>
+        <td><div class="wt-start">Bodyweight</div><div class="wt-step">➜ Add DB between ankles (4–6 kg) when 15 reps is easy</div></td>
+        <td class="tip-box">Tilt pelvis at top for full contraction. Lower back stays flat.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Russian Twist (DB)</div><div class="ex-target">Obliques</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 20 (10/side)</span></td>
+        <td class="ex-rest">45 s</td>
+        <td><div class="wt-start">6–8 kg (one DB)</div><div class="wt-step">➜ +2 kg every 2 weeks</div></td>
+        <td class="tip-box">Lean back ~45°. Rotate fully. Feet can be elevated for extra challenge.</td>
+      </tr>
+    </table>
+    <div class="cardio-block">
+      <div class="cardio-label">🏃 Cardio Finisher</div>
+      <div class="cardio-desc">15 min incline treadmill walk — incline 8–12%, moderate pace. Great for glutes and fat burn without thrashing your legs further.</div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card" id="day-4">
+    <div class="day-card-header">
+      <div><div class="day-card-title">Day 4 — Upper Body Full + Core</div><div class="day-card-sub">Warm-up: 5 min treadmill + band pull-aparts</div></div>
+      <div class="day-badge">Thursday</div>
+    </div>
+    <div class="wt-legend">
+      <div class="wl-item"><div class="wl-dot start"></div><span class="wl-label">Start weight (Week 1–2)</span></div>
+      <div class="wl-item"><div class="wl-dot prog"></div><span class="wl-label">Add this much &amp; when</span></div>
+      <div class="wl-item"><div class="wl-dot cap"></div><span class="wl-label">24 kg cap — then use other methods</span></div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Weight &amp; Progression</th><th>Tip</th></tr>
+      <tr>
+        <td><div class="ex-name">DB Arnold Press</div><div class="ex-target">All 3 delt heads</div></td>
+        <td><span class="ex-sets">4</span><span class="ex-reps"> × 10</span></td>
+        <td class="ex-rest">75 s</td>
+        <td><div class="wt-start">12–14 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 22–24 kg</div></td>
+        <td class="tip-box">Start palms facing you, rotate out as you press. Full shoulder engagement.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Flat Bench Press</div><div class="ex-target">Chest — heavy strength focus</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 8</span></td>
+        <td class="ex-rest">90 s</td>
+        <td><div class="wt-start">18–20 kg each</div><div class="wt-step">➜ +2 kg every 2 weeks</div><div class="wt-cap">⚠ Cap: 24 kg</div><div class="wt-note">Go heavier than Monday — this is your strength set</div></td>
+        <td class="tip-box">Max manageable load. Solid form always beats heavier weight.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Renegade Row</div><div class="ex-target">Back + core anti-rotation</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 8 each</span></td>
+        <td class="ex-rest">75 s</td>
+        <td><div class="wt-start">12 kg each</div><div class="wt-step">➜ +2 kg every 2–3 weeks (hard exercise — progress slowly)</div></td>
+        <td class="tip-box">Plank position. Row one arm — stay square. No hip rotation at all.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Front Raise</div><div class="ex-target">Front delts</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 12</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">8 kg each</div><div class="wt-step">➜ +2 kg every 3 weeks</div></td>
+        <td class="tip-box">Alternate arms. Raise to shoulder height only. Controlled descent.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Concentration Curl</div><div class="ex-target">Biceps — peak contraction</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 12 each</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">12 kg</div><div class="wt-step">➜ +2 kg every 2 weeks</div></td>
+        <td class="tip-box">Elbow braced on inner thigh. Full squeeze at top — hold 1 sec.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Diamond Push-Up</div><div class="ex-target">Triceps — bodyweight</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × Max reps</span></td>
+        <td class="ex-rest">60 s</td>
+        <td><div class="wt-start">Bodyweight</div><div class="wt-step">➜ Add a plate on back when consistently hitting 15+ reps/set</div></td>
+        <td class="tip-box">Hands form a diamond shape. Elbows track back, not flared.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Bicycle Crunch</div><div class="ex-target">Abs + obliques</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 30 (15/side)</span></td>
+        <td class="ex-rest">45 s</td>
+        <td><div class="wt-start">Bodyweight</div><div class="wt-step">➜ Slow to 2 sec per rep — dramatically harder</div></td>
+        <td class="tip-box">Full rotation. Opposite elbow to knee. Don't rush — slow wins.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Dead Bug</div><div class="ex-target">Deep core — spine stability</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 10 each side</span></td>
+        <td class="ex-rest">45 s</td>
+        <td><div class="wt-start">Bodyweight</div><div class="wt-step">➜ Add 4–6 kg DB in each hand for progression</div></td>
+        <td class="tip-box">Lower back pressed to floor always. Breathe out as you extend.</td>
+      </tr>
+    </table>
+    <div class="cardio-block">
+      <div class="cardio-label">🏃 Cardio Finisher</div>
+      <div class="cardio-desc">10 min moderate treadmill jog (Zone 2–3). Optional: add 5 min incline walk after for extra burn.</div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-card" id="day-5">
+    <div class="day-card-header">
+      <div><div class="day-card-title">Day 5 — HIIT Treadmill + Core Blast</div><div class="day-card-sub">The fat-burning session. No heavy lifting — maximum sweat.</div></div>
+      <div class="day-badge">Friday</div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Block</th><th>Protocol</th><th>Duration</th><th>Speed &amp; Progression</th><th>Tip</th></tr>
+      <tr>
+        <td><div class="ex-name">Treadmill Warm-Up</div></td>
+        <td><span class="ex-reps">Easy walk</span></td>
+        <td class="ex-rest">5 min</td>
+        <td><div class="wt-start">5–6 km/h, flat</div></td>
+        <td class="tip-box">Build a light sweat before intervals begin.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">HIIT Sprint Intervals</div><div class="ex-target">Sprint / Walk alternating</div></td>
+        <td><span class="ex-reps">20 sec sprint / 40 sec walk × 10 rounds</span></td>
+        <td class="ex-rest">~17 min</td>
+        <td><div class="wt-start">Sprint: 12–13 km/h (Wk 1–2)</div><div class="wt-step">➜ +0.5–1 km/h every 2 weeks<br>Walk recovery: 5–6 km/h</div><div class="wt-cap">⚠ Target: 16–17 km/h by Week 12</div></td>
+        <td class="tip-box">85–90% max effort on sprints. If it feels easy, speed up. Safety clip on.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Cool Down Walk</div></td>
+        <td><span class="ex-reps">Easy walk</span></td>
+        <td class="ex-rest">5 min</td>
+        <td><div class="wt-start">4–5 km/h</div></td>
+        <td class="tip-box">Bring HR down before core circuit.</td>
+      </tr>
+    </table>
+    <div style="height:1px;background:var(--steel);"></div>
+    <table class="ex-table">
+      <tr><th>Core Circuit — 3 Rounds</th><th>Reps / Time</th><th>Rest</th><th>Weight &amp; Progression</th><th>Tip</th></tr>
+      <tr>
+        <td><div class="ex-name">Ab Wheel Rollout</div><div class="ex-target">Full core — anti-extension</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 10</span></td>
+        <td class="ex-rest">30 s</td>
+        <td><div class="wt-start">Bodyweight</div><div class="wt-step">➜ Extend range of motion each week</div></td>
+        <td class="tip-box">Pull back using abs only. Don't let hips drop.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">V-Up</div><div class="ex-target">Full abs</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 15</span></td>
+        <td class="ex-rest">30 s</td>
+        <td><div class="wt-start">Bodyweight</div><div class="wt-step">➜ Hold 4 kg DB between feet for progression</div></td>
+        <td class="tip-box">Touch hands to feet at top. Lower back doesn't slam down.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Side Plank</div><div class="ex-target">Obliques</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 30 sec each</span></td>
+        <td class="ex-rest">30 s</td>
+        <td><div class="wt-start">Bodyweight</div><div class="wt-step">➜ Increase to 45 then 60 sec holds</div></td>
+        <td class="tip-box">Hips high. Stack or stagger feet for stability.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">Mountain Climbers</div><div class="ex-target">Core + cardio</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 30 sec</span></td>
+        <td class="ex-rest">30 s</td>
+        <td><div class="wt-start">Bodyweight</div><div class="wt-step">➜ Increase to 45 sec as fitness improves</div></td>
+        <td class="tip-box">Hips level with shoulders. Drive knees hard and fast.</td>
+      </tr>
+      <tr>
+        <td><div class="ex-name">DB Weighted Crunch</div></td>
+        <td><span class="ex-sets">3</span><span class="ex-reps"> × 20</span></td>
+        <td class="ex-rest">30 s</td>
+        <td><div class="wt-start">6–8 kg (one DB at chest)</div><div class="wt-step">➜ +2 kg every 2 weeks</div></td>
+        <td class="tip-box">Crunch up, squeeze abs hard at top. Slow and deliberate.</td>
+      </tr>
+    </table>
+    <div class="cardio-block">
+      <div class="cardio-label">⚠️ Friday Note</div>
+      <div class="cardio-desc">Four heavy days are already in the bank. Keep HIIT intense but don't pile on more volume. Weekend is mandatory rest — your body builds muscle Saturday and Sunday, not during training.</div>
+    </div>
+  </div>
+</div><!-- end schedule tab -->
+
+<!-- ══ ROADMAP TAB ══ -->
+<div class="tab-content" id="tab-roadmap">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div><div class="section-title">12-Week Weight Roadmap</div><div class="section-sub">Calibrated for 80–90 kg bodyweight · Current curl 12–14 kg · Current bench 16–18 kg</div></div>
+  </div>
+
+  <div class="overload-wrap">
+    <div class="overload-scroll">
+      <table class="overload-table">
+        <tr>
+          <th>Exercise</th>
+          <th style="color:var(--orange)">Wk 1–2 Start</th>
+          <th>Wk 3–4</th>
+          <th>Wk 5–6</th>
+          <th>Wk 7–8</th>
+          <th>Wk 9–10</th>
+          <th>Wk 11–12</th>
+        </tr>
+        <tr><td colspan="7" class="ol-group">PUSH — Chest / Shoulders / Triceps</td></tr>
+        <tr><td class="ol-ex">DB Bench Press</td><td class="ol-start">16–18 kg</td><td class="ol-mid">18 kg</td><td class="ol-mid">18–20 kg</td><td class="ol-mid">20–22 kg</td><td class="ol-mid">22 kg</td><td class="ol-cap">22–24 kg ✓</td></tr>
+        <tr><td class="ol-ex">Incline DB Press</td><td class="ol-start">14 kg</td><td class="ol-mid">14–16 kg</td><td class="ol-mid">16–18 kg</td><td class="ol-mid">18 kg</td><td class="ol-mid">18–20 kg</td><td class="ol-cap">20–22 kg ✓</td></tr>
+        <tr><td class="ol-ex">DB Overhead Press</td><td class="ol-start">14 kg</td><td class="ol-mid">16 kg</td><td class="ol-mid">16–18 kg</td><td class="ol-mid">18–20 kg</td><td class="ol-mid">20 kg</td><td class="ol-cap">22–24 kg ✓</td></tr>
+        <tr><td class="ol-ex">Lateral Raise</td><td class="ol-start">6 kg</td><td class="ol-mid">6–8 kg</td><td class="ol-mid">8 kg</td><td class="ol-mid">8–10 kg</td><td class="ol-mid">10 kg</td><td class="ol-mid">10–12 kg</td></tr>
+        <tr><td class="ol-ex">DB Chest Fly</td><td class="ol-start">10 kg</td><td class="ol-mid">10–12 kg</td><td class="ol-mid">12 kg</td><td class="ol-mid">12–14 kg</td><td class="ol-mid">14 kg</td><td class="ol-mid">14–16 kg</td></tr>
+        <tr><td class="ol-ex">OH Tricep Extension</td><td class="ol-start">14 kg</td><td class="ol-mid">16 kg</td><td class="ol-mid">16–18 kg</td><td class="ol-mid">18–20 kg</td><td class="ol-mid">20 kg</td><td class="ol-cap">22–24 kg ✓</td></tr>
+        <tr><td class="ol-ex">Tricep Kickback</td><td class="ol-start">8 kg</td><td class="ol-mid">8–10 kg</td><td class="ol-mid">10 kg</td><td class="ol-mid">10–12 kg</td><td class="ol-mid">12 kg</td><td class="ol-mid">12–14 kg</td></tr>
+
+        <tr><td colspan="7" class="ol-group">PULL — Back / Biceps</td></tr>
+        <tr><td class="ol-ex">Bent-Over Row</td><td class="ol-start">18–20 kg</td><td class="ol-mid">20 kg</td><td class="ol-mid">20–22 kg</td><td class="ol-cap">24 kg ✓</td><td class="ol-note" colspan="2">Drop sets + add reps / slow tempo at 24 kg</td></tr>
+        <tr><td class="ol-ex">Single-Arm Row</td><td class="ol-start">16–18 kg</td><td class="ol-mid">18–20 kg</td><td class="ol-mid">20–22 kg</td><td class="ol-mid">22 kg</td><td class="ol-cap">24 kg ✓</td><td class="ol-note">Slow tempo / add sets</td></tr>
+        <tr><td class="ol-ex">Reverse Fly</td><td class="ol-start">8 kg</td><td class="ol-mid">8–10 kg</td><td class="ol-mid">10 kg</td><td class="ol-mid">10–12 kg</td><td class="ol-mid">12 kg</td><td class="ol-mid">12–14 kg</td></tr>
+        <tr><td class="ol-ex">DB Shrug</td><td class="ol-start">20 kg</td><td class="ol-mid">20–22 kg</td><td class="ol-cap">24 kg ✓</td><td class="ol-note" colspan="3">Hold longer / add reps / slow tempo after cap</td></tr>
+        <tr><td class="ol-ex">Bicep Curl</td><td class="ol-start">12–14 kg</td><td class="ol-mid">14 kg</td><td class="ol-mid">14–16 kg</td><td class="ol-mid">16 kg</td><td class="ol-mid">16–18 kg</td><td class="ol-mid">18–20 kg</td></tr>
+        <tr><td class="ol-ex">Hammer Curl</td><td class="ol-start">12 kg</td><td class="ol-mid">12–14 kg</td><td class="ol-mid">14 kg</td><td class="ol-mid">14–16 kg</td><td class="ol-mid">16 kg</td><td class="ol-mid">16–18 kg</td></tr>
+        <tr><td class="ol-ex">Incline DB Curl</td><td class="ol-start">10 kg</td><td class="ol-mid">10–12 kg</td><td class="ol-mid">12 kg</td><td class="ol-mid">12–14 kg</td><td class="ol-mid">14 kg</td><td class="ol-mid">14–16 kg</td></tr>
+
+        <tr><td colspan="7" class="ol-group">LEGS + CORE</td></tr>
+        <tr><td class="ol-ex">Goblet Squat</td><td class="ol-start">20 kg</td><td class="ol-mid">20–22 kg</td><td class="ol-cap">24 kg ✓</td><td class="ol-note" colspan="3">3-sec pause at bottom / add sets to keep progressing</td></tr>
+        <tr><td class="ol-ex">DB Romanian DL</td><td class="ol-start">18–20 kg</td><td class="ol-mid">20–22 kg</td><td class="ol-mid">22 kg</td><td class="ol-cap">24 kg ✓</td><td class="ol-note" colspan="2">4-sec slow eccentric after cap</td></tr>
+        <tr><td class="ol-ex">DB Reverse Lunge</td><td class="ol-start">12 kg</td><td class="ol-mid">14 kg</td><td class="ol-mid">14–16 kg</td><td class="ol-mid">16–18 kg</td><td class="ol-mid">18–20 kg</td><td class="ol-cap">20–22 kg ✓</td></tr>
+        <tr><td class="ol-ex">Russian Twist</td><td class="ol-start">6–8 kg</td><td class="ol-mid">8 kg</td><td class="ol-mid">8–10 kg</td><td class="ol-mid">10 kg</td><td class="ol-mid">10–12 kg</td><td class="ol-mid">12–14 kg</td></tr>
+        <tr><td class="ol-ex">DB Calf Raise</td><td class="ol-start">20 kg</td><td class="ol-mid">22 kg</td><td class="ol-cap">24 kg ✓</td><td class="ol-note" colspan="3">Add reps to 25–30 / single-leg calf raise after cap</td></tr>
+
+        <tr><td colspan="7" class="ol-group">HIIT TREADMILL (Sprint Speed)</td></tr>
+        <tr><td class="ol-ex">Sprint Intervals</td><td class="ol-start">12–13 km/h</td><td class="ol-mid">13–14 km/h</td><td class="ol-mid">14 km/h</td><td class="ol-mid">14–15 km/h</td><td class="ol-mid">15–16 km/h</td><td class="ol-cap">16–17 km/h</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="progress-block">
+    <h3>When You Hit 24 kg — What To Do Next</h3>
+    <div class="progress-phase">
+      <div class="phase-num">1</div>
+      <div class="phase-text"><b>Increase Reps:</b> Push past the top of the prescribed range (e.g. 12–14 instead of 10). More reps at max load = continued hypertrophy stimulus.</div>
+    </div>
+    <div class="progress-phase">
+      <div class="phase-num">2</div>
+      <div class="phase-text"><b>Slow the Tempo:</b> 3–4 second eccentric (lowering phase) doubles time under tension. Dramatically harder than adding weight and great for muscle definition.</div>
+    </div>
+    <div class="progress-phase">
+      <div class="phase-num">3</div>
+      <div class="phase-text"><b>Drop Sets:</b> Last set at 24 kg → immediately drop to 16–18 kg and go to failure. Brutal and very effective for both hypertrophy and fat burning.</div>
+    </div>
+    <div class="progress-phase">
+      <div class="phase-num">4</div>
+      <div class="phase-text"><b>Add Sets:</b> Go from 3 to 4–5 sets on key lifts. More total volume at the same load still drives meaningful muscle growth.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRINCIPLES TAB ══ -->
+<div class="tab-content" id="tab-principles">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div><div class="section-title">Keys to Your Goal</div><div class="section-sub">What separates results from no results</div></div>
+  </div>
+  <div class="principles">
+    <div class="principle">
+      <div class="principle-icon">🍽️</div>
+      <div class="principle-text">
+        <h4>Nutrition is 70% of the six-pack</h4>
+        <p>At 80–90 kg, aim for 144–162g protein daily (1.8g per kg bodyweight). Target a 300–500 calorie deficit. No training will reveal abs while eating in a surplus. Track for 2–3 weeks to know where you actually stand.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">📈</div>
+      <div class="principle-text">
+        <h4>Progressive Overload — The Only Rule That Matters</h4>
+        <p>The weight roadmap is your north star. Add weight or reps every 1–2 weeks. Without this, you plateau regardless of effort. The body adapts to stress — you must keep increasing it.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">😴</div>
+      <div class="principle-text">
+        <h4>Sleep 7–9 Hours — The Highest ROI Tool</h4>
+        <p>Growth hormone and testosterone peak during deep sleep. Skimping tanks both muscle gain and fat loss at the same time. It's free — use it.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">🎯</div>
+      <div class="principle-text">
+        <h4>Mind-Muscle Connection</h4>
+        <p>On isolation work (curls, laterals, flys) — intentionally contract the target muscle. Research shows this improves activation by ~20%. Feel the rep, don't just move the weight.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">🔄</div>
+      <div class="principle-text">
+        <h4>Deload Every 4–5 Weeks</h4>
+        <p>Drop all weights ~30% and reduce sets for one full week. Prevents overtraining, lets joints recover. You'll come back noticeably stronger. Don't skip this — it's part of the program.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">📸</div>
+      <div class="principle-text">
+        <h4>Track Progress the Right Way</h4>
+        <p>Weigh yourself weekly (same time, morning, fasted). Progress photos every 4 weeks — the mirror lies daily, photos show truth. Log your lifts so the roadmap stays on track.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Rest Sat &amp; Sun · Weekend = active recovery (walk, stretch) · All weights are per dumbbell unless noted · Six pack = training + kitchen + sleep</footer>
+
+<script>
+  function showDay(num, el) {
+    document.querySelectorAll('.day-card').forEach(c => c.classList.remove('visible'));
+    document.querySelectorAll('.split-day').forEach(d => d.classList.remove('active'));
+    document.getElementById('day-' + num).classList.add('visible');
+    el.classList.add('active');
+  }
+  function switchTab(name, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    el.classList.add('active');
+  }
+</script>
+</body>
+</html>
